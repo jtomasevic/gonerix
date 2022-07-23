@@ -1,6 +1,6 @@
 package collections
 
-// Represents a collection of key/value pairs that are sorted by the keys and are accessible by key and by index.
+// SortedList Represents a collection of key/value pairs that are sorted by the keys and are accessible by key and by index.
 type SortedList[K simpleTypes, V any] struct {
 	keys   SimpleSortedList[K]
 	values Dictionary[K, V]
@@ -27,11 +27,11 @@ func (list *SortedList[K, V]) Remove(key K) bool {
 	return false
 }
 
-// Get sorted values. 
-// TODO: this need optimisation. 
-func (list *SortedList[K, V]) Values() []V{
-	values:= []V{}
-	for _, key :=range list.keys {
+// Get sorted values.
+// TODO: this need optimisation.
+func (list *SortedList[K, V]) Values() []V {
+	values := []V{}
+	for _, key := range list.keys {
 		values = append(values, list.values[key])
 	}
 	return values

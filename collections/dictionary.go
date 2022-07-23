@@ -1,15 +1,13 @@
 package collections
 
-
-
-type Dictionary[K comparable, V comparable] map[K]V
+type Dictionary[K comparable, V any] map[K]V
 
 func (dic *Dictionary[K, V]) Remove(key K) (bool, V) {
-	current:= *dic
-	for k, value :=range current {
+	current := *dic
+	for k, value := range current {
 		if k == key {
 			delete(current, k)
-			dic = &current
+			*dic = current
 			return true, value
 		}
 	}
@@ -19,4 +17,10 @@ func (dic *Dictionary[K, V]) Remove(key K) (bool, V) {
 
 func (dic *Dictionary[K, V]) Length() int {
 	return len(*dic)
+}
+
+func (dic *Dictionary[K, V]) Exist(key K) bool {
+	current := *dic
+	exist := current[key]
+	return exist != nil
 }

@@ -7,8 +7,8 @@ import (
 )
 
 func TestSortedList_AddRemove(t *testing.T) {
-	products:= getProduct()
-	sorted:= SortedList[string, Product]{}
+	products := getProduct()
+	sorted := SortedList[string, Product]{}
 	for _, p := range products {
 		sorted.Add(p.Name, p)
 	}
@@ -20,8 +20,8 @@ func TestSortedList_AddRemove(t *testing.T) {
 		"Puma",
 	})
 
-	products= getProduct()
-	sorted= SortedList[string, Product]{}
+	products = getProduct()
+	sorted = SortedList[string, Product]{}
 	for _, p := range products {
 		sorted.Add(p.Name, p)
 	}
@@ -39,7 +39,7 @@ func TestSortedList_AddRemove(t *testing.T) {
 		"Nokka",
 	})
 
-	res:= sorted.Remove("Addidas")
+	res := sorted.Remove("Addidas")
 	require.Equal(t, sorted.keys.ToList(), List[string]{
 		"Diadora",
 		"Nokka",
@@ -48,56 +48,28 @@ func TestSortedList_AddRemove(t *testing.T) {
 
 	sorted.Remove("Diadora")
 	sorted.Remove("Nokka")
-	require.Equal(t, sorted.keys.ToList(), List[string]{
-
-	})
-	res= sorted.Remove("Nokka")
+	require.Equal(t, sorted.keys.ToList(), List[string]{})
+	res = sorted.Remove("Nokka")
 	require.False(t, res)
-	require.Equal(t, sorted.keys.ToList(), List[string]{
+	require.Equal(t, sorted.keys.ToList(), List[string]{})
 
-	})
-
-	products= getProduct()
-	sorted= SortedList[string, Product]{}
+	products = getProduct()
+	sorted = SortedList[string, Product]{}
 	for _, p := range products {
 		sorted.Add(p.Name, p)
 	}
 	require.Equal(t, sorted.Values(), []Product{
 		{
 			Name: "Addidas",
-		},{
+		}, {
 			Name: "Diadora",
-		},{
+		}, {
 			Name: "Nike",
-		},{
+		}, {
 			Name: "Nokka",
-		},{
+		}, {
 			Name: "Puma",
 		},
 	}, sorted)
 
-}
-
-type Product struct {
-	Name string
-}
-
-func getProduct() []Product {
-	return []Product{
-		{
-			Name: "Diadora",
-		},
-		{
-			Name: "Nike",
-		},
-		{
-			Name: "Addidas",
-		},
-		{
-			Name: "Puma",
-		},
-		{
-			Name: "Nokka",
-		},
-	}
 }

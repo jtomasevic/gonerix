@@ -1,13 +1,13 @@
 package collections
 
 // Stack Represents a simple last-in-first-out (LIFO) collection of objects.
-type Stack[T comparable] struct {
+type Stack[T any] struct {
 	elements []T
 }
 
 // Push Inserts an object at the top of the Stack.
 func (stack *Stack[T]) Push(element T) {
-	stack.elements = append([]T{element}, stack.elements... )
+	stack.elements = append([]T{element}, stack.elements...)
 }
 
 // Pop Removes and returns the object at the top of the Stack.
@@ -30,7 +30,7 @@ func (stack *Stack[T]) Peek() *T {
 	return &stack.elements[0]
 }
 
-// IsEmpty returns true if stack is empty. 
+// IsEmpty returns true if stack is empty.
 func (stack *Stack[T]) IsEmpty() bool {
 	return len(stack.elements) == 0
 }

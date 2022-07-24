@@ -9,12 +9,12 @@ func (list *List[T]) Add(element T) {
 }
 
 // Insert an element into the List[T] at the specified index.
-func (list *List[T]) Insert(position int, element T) bool {
+func (list *List[T]) Insert(position int, element ...T) bool {
 	if position > len(*list) || position < 0 {
 		return false
 	}
 	newList := *list
-	rightPart := append([]T{element}, newList[position:]...)
+	rightPart := append(element, newList[position:]...)
 	newList = append(newList[:position], rightPart...)
 	*list = newList
 	return true
@@ -22,7 +22,6 @@ func (list *List[T]) Insert(position int, element T) bool {
 
 // Remove the first occurrence of a specific object from the list
 func (list *List[T]) Remove(element T) bool {
-	index := -1
 	exist, index := list.Exist(element)
 	if !exist {
 		return false

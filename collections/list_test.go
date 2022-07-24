@@ -101,6 +101,33 @@ func TestList_Integer(t *testing.T) {
 		res := list.Insert(8, forInsert)
 		require.Equal(t, len(list), 5)
 		require.Equal(t, res, false)
+
+		// insert array
+		list = initIntList()
+		arrForInsert := []int{11, 12, 13}
+		res = list.Insert(2, arrForInsert...)
+		require.True(t, res)
+		require.Equal(
+			t,
+			list,
+			List[int]{
+				1, 2, 11, 12, 13, 3, 4, 5,
+			},
+		)
+
+		// insert array
+		list = initIntList()
+		arrForInsert = []int{11, 12, 13}
+		res = list.Insert(0, arrForInsert...)
+		require.True(t, res)
+		require.Equal(
+			t,
+			list,
+			List[int]{
+				11, 12, 13, 1, 2, 3, 4, 5,
+			},
+		)
+
 	})
 	t.Run("Reverse", func(t *testing.T) {
 		list := initIntList()

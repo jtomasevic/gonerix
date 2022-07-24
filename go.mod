@@ -1,4 +1,4 @@
-module gogenerics
+module github.com/jtomasevic/gonerix
 
 go 1.18
 

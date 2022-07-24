@@ -34,20 +34,20 @@ func (queue *priorityQueue[T, P]) Enqueue(value T, priority P) {
 // Dequeue Removes and returns the minimal element from the PriorityQueue - that is, the element with the lowest priority value.
 //  Note: If there is multiple elements with same priority last added will be removed first (Stack approach).
 //  If value with priority not exit return value will be false.
-func (queue *priorityQueue[T, P]) Dequeue() bool {
+func (queue *priorityQueue[T, P]) Dequeue() *T {
 	if len(queue.priorities) == 0 {
-		return false
+		return nil
 	}
 	priorities := queue.priorities
 	values := queue.values
 	minPriority := queue.priorities.First()
 	priorityElements := values[*minPriority]
-	// TODO JT: fix this code, looks ugly,=,
+	// TODO JT: fix this code, looks ugly
 	forRemoving := priorityElements.Pop()
 	values[*minPriority] = priorityElements
 	// this should never happen, but for every case.
 	if forRemoving == nil {
-		return false
+		return nil
 	}
 
 	fmt.Printf("*** to rempve %v , element: %v \n", *minPriority, forRemoving)
@@ -59,7 +59,7 @@ func (queue *priorityQueue[T, P]) Dequeue() bool {
 	queue.priorities = priorities
 	queue.values = values
 	fmt.Printf("**** prios: %v\n", queue.priorities)
-	return true
+	return forRemoving
 }
 
 // Peek Returns the minimal element from the PriorityQueue without removing it.

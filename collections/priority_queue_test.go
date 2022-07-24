@@ -127,7 +127,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 		queue.Dequeue()
 		queue.Dequeue()
 		result := queue.Dequeue()
-		require.False(t, result)
+		require.Nil(t, result)
 		obj := queue.Peek()
 		require.Nil(t, obj)
 

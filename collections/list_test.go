@@ -37,11 +37,12 @@ func TestList_Integer(t *testing.T) {
 	t.Run("Collection of integers: Remove at ", func(t *testing.T) {
 		list := initIntList()
 		require.Equal(t, len(list), 5)
+		require.Equal(t, List[int]{1, 2, 3, 4, 5}, list)
 		// remove first element
 		removeIndex := 0
 		list.RemoveAt(removeIndex)
 		require.Equal(t, len(list), 4)
-		require.Equal(t, list[0], 2)
+		require.Equal(t, List[int]{2, 3, 4, 5}, list)
 		fmt.Printf("Remove first element: %v\n", list)
 
 		// Remove last element
@@ -49,7 +50,7 @@ func TestList_Integer(t *testing.T) {
 		removeIndex = 4
 		list.RemoveAt(removeIndex)
 		require.Equal(t, len(list), 4)
-		require.Equal(t, list[len(list)-1], 4)
+		require.Equal(t, List[int]{1, 2, 3, 4}, list)
 		fmt.Printf("Remove last elementt: %v\n", list)
 
 		// Remove from the middle
@@ -57,7 +58,7 @@ func TestList_Integer(t *testing.T) {
 		removeIndex = 2
 		list.RemoveAt(removeIndex)
 		require.Equal(t, len(list), 4)
-		require.Equal(t, list[2], 4)
+		require.Equal(t, List[int]{1, 2, 4, 5}, list)
 		fmt.Printf("Remove at index %v, %v\n", removeIndex, list)
 
 		// Remove at, index out of range
@@ -65,6 +66,12 @@ func TestList_Integer(t *testing.T) {
 		removeIndex = 12
 		res := list.RemoveAt(removeIndex)
 		require.Equal(t, len(list), 5)
+		require.Equal(t, res, false)
+
+		list = List[int]{}
+		res = list.RemoveAt(0)
+		require.Equal(t, res, false)
+		res = list.Remove(5)
 		require.Equal(t, res, false)
 	})
 	t.Run("Collection of integers: Insert ", func(t *testing.T) {
@@ -109,14 +116,14 @@ func TestList_Integer(t *testing.T) {
 
 	t.Run("Find", func(t *testing.T) {
 		list := initIntList()
-		result := list.Find(func (el int) bool {return el == -1})
+		result := list.Find(func(el int) bool { return el == -1 })
 		require.Equal(t, len(result), 0)
-		result = list.Find(func (el int) bool {return el == 5})
+		result = list.Find(func(el int) bool { return el == 5 })
 		require.Equal(t, len(result), 1)
 		list.Add(3)
 		list.Add(3)
 		list.Add(3)
-		result = list.Find(func (el int) bool {return el == 3})
+		result = list.Find(func(el int) bool { return el == 3 })
 		require.Equal(t, len(result), 4)
 	})
 }

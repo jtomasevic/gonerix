@@ -1,6 +1,5 @@
 package collections
 
-
 type List[T comparable] []T
 
 // Add an object to the end of the list
@@ -24,7 +23,7 @@ func (list *List[T]) Insert(position int, element T) bool {
 // Remove the first occurrence of a specific object from the list
 func (list *List[T]) Remove(element T) bool {
 	index := -1
-	exist, index:= list.Exist(element)
+	exist, index := list.Exist(element)
 	if !exist {
 		return false
 	}
@@ -36,7 +35,7 @@ func (list *List[T]) Remove(element T) bool {
 
 // RemoveAt Removes the element at the specified index of the list
 func (list *List[T]) RemoveAt(position int) bool {
-	if position > len(*list) || position < 0 {
+	if position >= len(*list) || position < 0 {
 		return false
 	}
 	newList := *list
@@ -65,13 +64,13 @@ func (list *List[T]) Exist(element T) (bool, int) {
 	}
 	if index == -1 {
 		return false, -1
-	} 
+	}
 	return true, index
 }
 
-func (list *List[T]) Find(expression func (element T) bool) List[T]{
+func (list *List[T]) Find(expression func(element T) bool) List[T] {
 	result := List[T]{}
-	for _, el :=range *list {
+	for _, el := range *list {
 		if expression(el) {
 			result.Add(el)
 		}

@@ -1,6 +1,8 @@
 package collections
 
-// IsLower returns true if left paramater is lower than right paramater
+import "fmt"
+
+// IsLower returns true if left parameter is lower than right parameter
 type IsLower[T comparable] func(left T, right T) bool
 
 // SortedStructList create
@@ -15,7 +17,7 @@ type sortedStructList[T comparable] struct {
 	isLower  IsLower[T]
 }
 
-// Add element to sorted list. It is duplicate tolerante.
+// Add element to sorted list. It is duplicate tolerant.
 func (list *sortedStructList[T]) Add(element T) {
 
 	newList := list.elements
@@ -35,7 +37,7 @@ func (list *sortedStructList[T]) Add(element T) {
 }
 
 // Remove element from sorted list. If there is multiple values, removes only first one.
-//  If cannot find element return false.
+//  If element cannot be find return false.
 func (list *sortedStructList[T]) Remove(element T) bool {
 	if len(list.elements) == 0 {
 		return false
@@ -57,4 +59,26 @@ func (list *sortedStructList[T]) Remove(element T) bool {
 		return true
 	}
 	return false
+}
+
+// RemoveAt Removes the element at the specified index of the list
+func (list *sortedStructList[T]) RemoveAt(position int) bool {
+	if position >= len(list.elements) || position < 0 {
+		return false
+	}
+	newList := list.elements
+	newList = append(newList[:position], newList[position+1:]...)
+	fmt.Printf("*** new list %v", newList)
+	(*list).elements = newList
+	return true
+}
+
+// Values return list of sorted structs.
+func (list *sortedStructList[T]) Values() []T {
+	return (*list).elements
+}
+
+// Size number of elements in collection
+func (list *sortedStructList[T]) Size() int {
+	return len(list.elements)
 }

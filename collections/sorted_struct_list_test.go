@@ -6,16 +6,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSortedStructList_AddRemove(t *testing.T) {
-	products := getProduct()
-	sorted := SortedStructList(func(left Product, right Product) bool {
-		return left.Name < right.Name
-	})
-	for _, p := range products {
-		sorted.Add(p)
-	}
+func TestSortedStructList_Add(t *testing.T) {
+	sorted := getSortedProducts()
+
 	t.Run("Add ", func(t *testing.T) {
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, sorted.Values(), []Product{
 			{
 				Name: "Addidas",
 			},
@@ -33,8 +28,11 @@ func TestSortedStructList_AddRemove(t *testing.T) {
 			},
 		})
 	})
-
+}
+func TestSortedStructList_Remove(t *testing.T) {
+	sorted := getSortedProducts()
 	t.Run("Remove from middle ", func(t *testing.T) {
+
 		result := sorted.Remove(Product{
 			Name: "Nike",
 		})
@@ -120,6 +118,101 @@ func TestSortedStructList_AddRemove(t *testing.T) {
 		})
 		require.False(t, result)
 	})
+}
+
+func TestSortedStructList_RemoveAt(t *testing.T) {
+	sorted := getSortedProducts()
+
+	t.Run("Remove from middle ", func(t *testing.T) {
+		result := sorted.RemoveAt(2)
+		require.True(t, result)
+		require.Equal(t, []Product{
+			{
+				Name: "Addidas",
+			},
+			{
+				Name: "Diadora",
+			},
+			{
+				Name: "Nokka",
+			},
+			{
+				Name: "Puma",
+			},
+		}, sorted.elements)
+		require.Equal(t, sorted.Size(), 4)
+	})
+	t.Run("Remove with non existing index", func(t *testing.T) {
+		result := sorted.RemoveAt(10)
+		require.False(t, result)
+		require.Equal(t, sorted.elements, []Product{
+			{
+				Name: "Addidas",
+			},
+			{
+				Name: "Diadora",
+			},
+			{
+				Name: "Nokka",
+			},
+			{
+				Name: "Puma",
+			},
+		})
+		result = sorted.RemoveAt(-1)
+		require.False(t, result)
+	})
+	t.Run("Remove at First", func(t *testing.T) {
+		result := sorted.RemoveAt(0)
+		require.True(t, result)
+		require.Equal(t, sorted.elements, []Product{
+			{
+				Name: "Diadora",
+			},
+			{
+				Name: "Nokka",
+			},
+			{
+				Name: "Puma",
+			},
+		})
+	})
+	t.Run("Remove at Last", func(t *testing.T) {
+		result := sorted.RemoveAt(2)
+		require.True(t, result)
+		require.Equal(t, sorted.elements, []Product{
+			{
+				Name: "Diadora",
+			},
+			{
+				Name: "Nokka",
+			},
+		})
+	})
+	t.Run("Remove at From empty", func(t *testing.T) {
+		result := sorted.RemoveAt(0)
+		require.True(t, result)
+		result = sorted.RemoveAt(0)
+		require.True(t, result)
+		require.Equal(t, sorted.elements, []Product{})
+		require.Equal(t, sorted.Size(), 0)
+
+		result = sorted.RemoveAt(0)
+		require.False(t, result)
+		result = sorted.RemoveAt(10)
+		require.False(t, result)
+	})
+}
+
+func getSortedProducts() sortedStructList[Product] {
+	products := getProduct()
+	sorted := SortedStructList(func(left Product, right Product) bool {
+		return left.Name < right.Name
+	})
+	for _, p := range products {
+		sorted.Add(p)
+	}
+	return sorted
 }
 
 type Product struct {

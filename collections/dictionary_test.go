@@ -16,7 +16,13 @@ func TestDictionary(t *testing.T) {
 		require.Equal(t, dic[2], "two")
 		require.Equal(t, dic[3], "three")
 
-		isOk, result:= dic.Remove(1)
+		exist := dic.Exist(1)
+		require.True(t, exist)
+
+		exist = dic.Exist(10)
+		require.False(t, exist)
+
+		isOk, result := dic.Remove(1)
 		require.True(t, isOk)
 		require.Equal(t, result, "one")
 

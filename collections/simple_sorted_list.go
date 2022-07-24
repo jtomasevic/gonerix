@@ -1,17 +1,9 @@
 package collections
 
-// ComperableFunction returns true if left paramater is higer than right paramater
-type ComperableFunction[T comparable] func(left T, right T) bool
-
 // Types supported by Sorted List
 type simpleTypes interface {
 	int | int8 | int16 | int32 | int64 | float32 | float64 | string
 }
-
-// type SortedList[T simpleTypes] struct {
-// 	elements       []T
-// 	// comparableFunc ComperableFunction[T]
-// }
 
 // SimpleSortedList Support sorted list for simple types like int, float and string.
 type SimpleSortedList[T simpleTypes] []T
@@ -35,8 +27,8 @@ func (list *SimpleSortedList[T]) Add(element T) {
 	*list = elems
 }
 
-// Remove element from sorted list. If there is multiple values, removes only first one. 
-//  If cannot find element return false. 
+// Remove element from sorted list. If there is multiple values, removes only first one.
+//  If cannot find element return false.
 func (list *SimpleSortedList[T]) Remove(element T) bool {
 	if len(*list) == 0 {
 		return false
@@ -59,11 +51,31 @@ func (list *SimpleSortedList[T]) Remove(element T) bool {
 	return false
 }
 
-// ToList Return simple List from sorted list elements. 
+// ToList Return simple List from sorted list elements.
 func (list *SimpleSortedList[T]) ToList() List[T] {
 	res := List[T]{}
 	for _, el := range *list {
 		res.Add(el)
 	}
 	return res
+}
+
+// Last Returns element from the end of the list
+//  - nil if list is empty.
+func (list *SimpleSortedList[T]) Last() *T {
+	if len(*list) == 0 {
+		return nil
+	}
+	last := (*list)[len(*list)-1]
+	return &last
+}
+
+// First Returns first element of the kust
+//  - nil if list is empty.
+func (list *SimpleSortedList[T]) First() *T {
+	if len(*list) == 0 {
+		return nil
+	}
+	first := (*list)[0]
+	return &first
 }

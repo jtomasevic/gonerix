@@ -8,7 +8,7 @@ import (
 )
 
 func TestSortedList_Integer(t *testing.T) {
-	t.Run("Add", func(t *testing.T) {
+	t.Run("Add / Remove", func(t *testing.T) {
 		list := SimpleSortedList[int]{}
 		list.Add(3)
 		list.Add(1)
@@ -199,5 +199,32 @@ func TestSortedList_Integer(t *testing.T) {
 			list.ToList(),
 			List[int]{},
 		)
+	})
+	t.Run("Last member", func(t *testing.T) {
+		list := SimpleSortedList[int]{}
+		list.Add(3)
+		list.Add(1)
+		list.Add(2)
+		list.Add(10)
+		list.Add(9)
+		list.Add(5)
+		list.Add(7)
+		list.Add(4)
+		list.Add(6)
+		list.Add(8)
+		currentList := List[int]{
+			1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+		}
+		require.Equal(t, currentList, list.ToList())
+
+		last := list.Last()
+		first := list.First()
+		require.Equal(t, 10, *last)
+		require.Equal(t, 1, *first)
+		list = SimpleSortedList[int]{}
+		last = list.Last()
+		require.Nil(t, last)
+		first = list.First()
+		require.Nil(t, first)
 	})
 }

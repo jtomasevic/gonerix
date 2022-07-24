@@ -1,7 +1,5 @@
 package collections
 
-import "fmt"
-
 // IsLower returns true if left parameter is lower than right parameter
 type IsLower[T comparable] func(left T, right T) bool
 
@@ -68,7 +66,6 @@ func (list *sortedStructList[T]) RemoveAt(position int) bool {
 	}
 	newList := list.elements
 	newList = append(newList[:position], newList[position+1:]...)
-	fmt.Printf("*** new list %v", newList)
 	(*list).elements = newList
 	return true
 }

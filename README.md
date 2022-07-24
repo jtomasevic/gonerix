@@ -3,6 +3,6 @@ Generic collections for golang
 
 ## Still in preparation 
 
-Check out code and test, to understand more. 
+Check out code and tests, to understand more. 
 
-Expected release of first vesion: 1st September 2022.
+Expected release + explainational examples: 1st September 2022.

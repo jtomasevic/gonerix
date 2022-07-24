@@ -1,12 +1,10 @@
 package collections
 
-type Queue[T any] struct {
-	elements []T
-}
+type Queue[T any] []T
 
 // Enqueue Adds an object to the end of the Queue.
 func (queue *Queue[T]) Enqueue(element T) {
-	queue.elements = append(queue.elements, element)
+	*queue = append(*queue, element)
 }
 
 // Dequeue Removes and returns the object at the beginning of the Queue.
@@ -15,8 +13,8 @@ func (queue *Queue[T]) Dequeue() *T {
 	if queue.IsEmpty() {
 		return nil
 	}
-	removed := queue.elements[0]
-	queue.elements = queue.elements[1:len(queue.elements)]
+	removed := (*queue)[0]
+	*queue = (*queue)[1:len(*queue)]
 	return &removed
 }
 
@@ -26,9 +24,10 @@ func (queue *Queue[T]) Peek() *T {
 	if queue.IsEmpty() {
 		return nil
 	}
-	return &queue.elements[0]
+	return &(*queue)[0]
 }
 
+// IsEmpty return bool is true, otherwise false
 func (queue *Queue[T]) IsEmpty() bool {
-	return len(queue.elements) == 0
+	return len(*queue) == 0
 }

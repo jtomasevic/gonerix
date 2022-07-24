@@ -61,13 +61,12 @@ func (list *sortedStructList[T]) Remove(element T) bool {
 
 // RemoveAt Removes the element at the specified index of the list
 func (list *sortedStructList[T]) RemoveAt(position int) bool {
-	if position >= len(list.elements) || position < 0 {
-		return false
+	newList, removed := RemoveAt(list.elements, position)
+	if removed {
+		(*list).elements = newList
+		return true
 	}
-	newList := list.elements
-	newList = append(newList[:position], newList[position+1:]...)
-	(*list).elements = newList
-	return true
+	return false
 }
 
 // Values return list of sorted structs.

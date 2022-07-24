@@ -53,13 +53,12 @@ func (list *SimpleSortedList[T]) Remove(element T) bool {
 
 // RemoveAt If cannot find element return false.
 func (list *SimpleSortedList[T]) RemoveAt(position int) bool {
-	if position >= len(*list) || position < 0 {
-		return false
+	newList, removed := RemoveAt(*list, position)
+	if removed {
+		*list = newList
+		return true
 	}
-	newList := *list
-	newList = append(newList[:position], newList[position+1:]...)
-	*list = newList
-	return true
+	return false
 }
 
 // ToList Return simple List from sorted list elements.

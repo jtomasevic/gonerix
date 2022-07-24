@@ -33,7 +33,6 @@ func TestList_Integer(t *testing.T) {
 		require.Equal(t, len(list), 5)
 		require.Equal(t, res, false)
 	})
-
 	t.Run("Collection of integers: Remove at ", func(t *testing.T) {
 		list := initIntList()
 		require.Equal(t, len(list), 5)
@@ -113,7 +112,6 @@ func TestList_Integer(t *testing.T) {
 		require.Equal(t, list[4], 1)
 
 	})
-
 	t.Run("Find", func(t *testing.T) {
 		list := initIntList()
 		result := list.Find(func(el int) bool { return el == -1 })

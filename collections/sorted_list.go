@@ -27,6 +27,18 @@ func (list *SortedList[K, V]) Remove(key K) bool {
 	return false
 }
 
+func (list *SortedList[K, V]) RemoveAt(position int) bool {
+	if position >= len(list.keys) || position < 0 {
+		return false
+	}
+	key := list.keys[position]
+	// TODO: jt: no need to check result of list.keys.RemoveAt, because condition above is already included in this method.
+	//  however, this need refactoring, and probably removeAt will return removed item + if remove was OK.
+	list.keys.RemoveAt(position)
+	list.values.Remove(key)
+	return true
+}
+
 // Get sorted values.
 // TODO: this need optimisation.
 func (list *SortedList[K, V]) Values() []V {

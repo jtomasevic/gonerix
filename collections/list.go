@@ -35,13 +35,12 @@ func (list *List[T]) Remove(element T) bool {
 
 // RemoveAt Removes the element at the specified index of the list
 func (list *List[T]) RemoveAt(position int) bool {
-	if position >= len(*list) || position < 0 {
-		return false
+	newList, removed := RemoveAt(*list, position)
+	if removed {
+		*list = newList
+		return true
 	}
-	newList := *list
-	newList = append(newList[:position], newList[position+1:]...)
-	*list = newList
-	return true
+	return false
 }
 
 // Reverse the order of the elements in the entire

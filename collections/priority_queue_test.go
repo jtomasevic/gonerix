@@ -16,58 +16,48 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 			3, 3, 4, 5, 7, 10, 10,
 		}, queue.priorities.ToList())
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "Tesla",
-					OrderNo:  "TSL-s2",
-					Priority: 3,
-				},
-				{
-					Customer: "Google",
-					OrderNo:  "G-s2",
-					Priority: 3,
-				},
+			{
+				Customer: "Tesla",
+				OrderNo:  "TSL-s2",
+				Priority: 3,
+			},
+			{
+				Customer: "Google",
+				OrderNo:  "G-s2",
+				Priority: 3,
 			},
 		}, queue.values[3])
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "IBM",
-					OrderNo:  "IBM-s1",
-					Priority: 4,
-				},
+			{
+				Customer: "IBM",
+				OrderNo:  "IBM-s1",
+				Priority: 4,
 			},
 		}, queue.values[4])
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "Google",
-					OrderNo:  "G-s1",
-					Priority: 5,
-				},
+			{
+				Customer: "Google",
+				OrderNo:  "G-s1",
+				Priority: 5,
 			},
 		}, queue.values[5])
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "Microsoft",
-					OrderNo:  "TSL-s2",
-					Priority: 7,
-				},
+			{
+				Customer: "Microsoft",
+				OrderNo:  "TSL-s2",
+				Priority: 7,
 			},
 		}, queue.values[7])
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "Apple",
-					OrderNo:  "Apple-s1",
-					Priority: 10,
-				},
-				{
-					Customer: "Tesla",
-					OrderNo:  "TSL-s1",
-					Priority: 10,
-				},
+			{
+				Customer: "Apple",
+				OrderNo:  "Apple-s1",
+				Priority: 10,
+			},
+			{
+				Customer: "Tesla",
+				OrderNo:  "TSL-s1",
+				Priority: 10,
 			},
 		}, queue.values[10])
 	})
@@ -94,12 +84,10 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 			3, 4, 5, 7, 10, 10,
 		}, queue.priorities.ToList())
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "Google",
-					OrderNo:  "G-s2",
-					Priority: 3,
-				},
+			{
+				Customer: "Google",
+				OrderNo:  "G-s2",
+				Priority: 3,
 			},
 		}, queue.values[3])
 		//
@@ -108,12 +96,10 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 			4, 5, 7, 10, 10,
 		}, queue.priorities.ToList())
 		require.Equal(t, Stack[Order]{
-			elements: []Order{
-				{
-					Customer: "IBM",
-					OrderNo:  "IBM-s1",
-					Priority: 4,
-				},
+			{
+				Customer: "IBM",
+				OrderNo:  "IBM-s1",
+				Priority: 4,
 			},
 		}, queue.values[4])
 		require.Equal(t, Order{

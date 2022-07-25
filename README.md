@@ -1,54 +1,145 @@
 # gonerix
 Generic collections for golang
 
-# Still in preparation 
+### Documentation still in development 
 
-Check out code and test/example, to understand more. 
-
-#### MORE EXAMPLES SOON
+For still not documented collections check out code and test/example, to understand more. 
 
 ### Expected release + more explainational examples: 
 1st September 2022.
-## List
-Example: 
+## Usage
+
+We'll assume that in each file you'll have import of collection package with qx prefix, to make examples more readable:
 ```
 import (
 	"fmt"
 	gx "github.com/jtomasevic/gonerix/collections"
 )
+```
+# API
+- [List[T]](https://github.com/jtomasevic/gonerix/edit/main/README.md#listt)
 
-func main() {
-	list := gx.List[int]{}
-	list.Add(1)
-	list.Add(2)
-	list.Add(4)
-	list.Add(3)
-	fmt.Println(list)
-	// [1 2 4 3]
+# List[T]
 
-	list.Reverse()
-	fmt.Println(list)
-	// [3 4 2 1]
+### Add
+```
+list := gx.List[int]{}
 
-	list.Remove(2)
-	fmt.Println(list)
-	// [3 4 1]
+list.Add(1)
+list.Add(2)
+list.Add(4)
+list.Add(8)
+fmt.Println(list)
+// [1 2 4 8]
+```
+### Insert
+First parameter is index where to insert an emlement of more of them.
+Second parameter is one or values to be added to list
+#### Insert one value
+```
+list.Insert(2, 3)
+fmt.Println(list)
+// [1 2 3 4 8]
+```
+#### Insert multiple value
+```
+list.Insert(4, 5, 6, 7)
+fmt.Println(list)
+// [1 2 3 4 5 6 7 8]
+````
+### Reverse
+```
+list.Reverse()
+fmt.Println(list)
+// [8 7 6 5 4 3 2 1]
+```
+### Remove element from list
+```
+list.Remove(7)
+fmt.Println(list)
+// [8 6 5 4 3 2 1]
+```
+### Remove element with particular index
+```
+list.RemoveAt(2)
+fmt.Println(list)
+// [8 6 4 3 2 1]
 
-	list.Insert(0, 10)
-	fmt.Println(list)
-	// [10 3 4 1]
+list.RemoveAt(len(list) - 1)
+fmt.Println(list)
+// [8 6 4 3 2]
+```
+### Exist
+```
+res, index := list.Exist(4)
+fmt.Printf("element: %v, index: %v\n", res, index)
+// element: true, index: 2
 
-	list.Insert(2, 5, 6, 7, 8)
-	fmt.Println(list)
-	// [10 3 5 6 7 8 4 1]
+res, index = list.Exist(14)
+fmt.Printf("element: %v, index: %v\n", res, index)
+// element: false, index: -1
+```
 
-	list.RemoveAt(0)
-	fmt.Println(list)
-	// [3 5 6 7 8 4 1]
-
-	list.RemoveAt(len(list) - 1)
-	fmt.Println(list)
-	// [3 5 6 7 8 4]
+### AddOrReplace
+This operation applies only to first element found under certain condition
+- Try to find element that satisfied condition in isEqual function (second parameter)
+- If found replace with new provided element (first parameter).
+- If not found add it to list.
+```
+// Create some structs to be part of List
+type CupSize string
+const (
+	Small      CupSize = "small"
+	Medium     CupSize = "medium"
+	Large      CupSize = "large"
+	ExtraLarge CupSize = "extraLarge"
+)
+type BlackCoffeeOffer struct {
+	Price int
+	Size  CupSize
 }
+// Initialise list
+products := gx.List[BlackCoffeeOffer]{
+	{
+		Price: 100,
+		Size:  Small,
+	},
+	{
+		Price: 150,
+		Size:  Medium,
+	},
+	{
+		Price: 200,
+		Size:  Large,
+	},
+}
+products.AddOrReplace(BlackCoffeeOffer{
+	Price: 250,
+	Size:  ExtraLarge,
+}, func(left BlackCoffeeOffer, right BlackCoffeeOffer) bool {
+	return left.Size == right.Size
+})
+fmt.Println(products)
+// [{100 small} {150 medium} {200 large} {250 extraLarge}]
+
+// define isEqual function as variable
+var isEqual gx.IsEqual[BlackCoffeeOffer] = func(left BlackCoffeeOffer, right BlackCoffeeOffer) bool {
+	return left.Size == right.Size
+}
+products.AddOrReplace(BlackCoffeeOffer{
+	Price: 95,
+	Size:  Small,
+}, isEqual)
+fmt.Println(products)
+// [{95 small} {150 medium} {200 large} {250 extraLarge}]
+```
+### Find
+Return list of elements that satisfy function check provided by expression parameter
+```
+cheaperThan200 := products.Find(func(left BlackCoffeeOffer) bool {
+	return left.Price < 200
+})
+fmt.Println(cheaperThan200)
+// [{95 small} {150 medium}]
 ```
 

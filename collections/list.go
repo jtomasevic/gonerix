@@ -1,5 +1,7 @@
 package collections
 
+import "fmt"
+
 type List[T comparable] []T
 
 // Add an object to the end of the list
@@ -66,6 +68,7 @@ func (list *List[T]) Exist(element T) (bool, int) {
 	return true, index
 }
 
+// Find Return list of elements that satisfy function check provided by expression parameter.
 func (list *List[T]) Find(expression func(element T) bool) List[T] {
 	result := List[T]{}
 	for _, el := range *list {
@@ -74,4 +77,13 @@ func (list *List[T]) Find(expression func(element T) bool) List[T] {
 		}
 	}
 	return result
+}
+
+// AddOrReplace element in the list under some condition. Applies only to first element found under this condition
+//  - Try to find element that satisfied condition in isEqual function
+//  - If found replace with new provided element.
+func (list *List[T]) AddOrReplace(element T, isEqual IsEqual[T]) {
+	result := AddOrReplace(*list, element, isEqual)
+	fmt.Printf("*** results: %v\n", result)
+	*list = result
 }

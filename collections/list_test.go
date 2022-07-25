@@ -153,6 +153,101 @@ func TestList_Integer(t *testing.T) {
 	})
 }
 
+func TestList_AddOrReplace(t *testing.T) {
+	isEqual := func(left TransferCost, right TransferCost) bool {
+		return left.CityName == right.CityName
+	}
+	t.Run("AddOrReplace Add", func(t *testing.T) {
+		costs := getTransferCostList()
+		new := TransferCost{
+			CityName: "Bahrein",
+			Price:    350,
+		}
+		costs.AddOrReplace(new, isEqual)
+		require.Equal(t, List[TransferCost]{
+			{
+				CityName: "Belgrade",
+				Price:    120,
+			},
+			{
+				CityName: "London",
+				Price:    400,
+			},
+			{
+				CityName: "New York",
+				Price:    800,
+			},
+			new,
+		}, costs)
+	})
+	t.Run("AddOrReplace Replace First", func(t *testing.T) {
+		costs := getTransferCostList()
+		replace := TransferCost{
+			CityName: "Belgrade",
+			Price:    110,
+		}
+		costs.AddOrReplace(replace, isEqual)
+		require.Equal(t, List[TransferCost]{
+			{
+				CityName: "Belgrade",
+				Price:    110,
+			},
+			{
+				CityName: "London",
+				Price:    400,
+			},
+			{
+				CityName: "New York",
+				Price:    800,
+			},
+		}, costs)
+	})
+	t.Run("AddOrReplace Replace Last", func(t *testing.T) {
+		costs := getTransferCostList()
+		replace := TransferCost{
+			CityName: "New York",
+			Price:    850,
+		}
+		costs.AddOrReplace(replace, isEqual)
+		require.Equal(t, List[TransferCost]{
+			{
+				CityName: "Belgrade",
+				Price:    120,
+			},
+			{
+				CityName: "London",
+				Price:    400,
+			},
+			{
+				CityName: "New York",
+				Price:    850,
+			},
+		}, costs)
+	})
+	t.Run("AddOrReplace Replace in the middle ", func(t *testing.T) {
+		costs := getTransferCostList()
+		replace := TransferCost{
+			CityName: "London",
+			Price:    380,
+		}
+		costs.AddOrReplace(replace, isEqual)
+		require.Equal(t, List[TransferCost]{
+			{
+				CityName: "Belgrade",
+				Price:    120,
+			},
+			{
+				CityName: "London",
+				Price:    380,
+			},
+			{
+				CityName: "New York",
+				Price:    800,
+			},
+		}, costs)
+	})
+}
+
 // initIntList return list with 5 members where values are going from 1 to 5.
 func initIntList() List[int] {
 	list := List[int]{}
@@ -170,6 +265,24 @@ func initIntList() List[int] {
 // 	return list
 // }
 
-type Player struct {
-	Name string
+type TransferCost struct {
+	CityName string
+	Price    int
+}
+
+func getTransferCostList() List[TransferCost] {
+	return List[TransferCost]{
+		{
+			CityName: "Belgrade",
+			Price:    120,
+		},
+		{
+			CityName: "London",
+			Price:    400,
+		},
+		{
+			CityName: "New York",
+			Price:    800,
+		},
+	}
 }

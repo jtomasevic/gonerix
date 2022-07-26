@@ -30,3 +30,19 @@ func AddOrReplace[T comparable](list []T,
 	fmt.Printf("**** generic result: %v\n", l)
 	return l
 }
+
+// FindPosition Return index of element or:
+// - If element is not in elements, then return index where element can be added considering order.
+func FindPosition[T simpleTypes](elements []T, element T) int {
+	left := 0
+	right := len(elements) - 1
+	for left <= right {
+		median := (left + right) / 2
+		if elements[median] < element {
+			left = median + 1
+		} else {
+			right = median - 1
+		}
+	}
+	return left
+}

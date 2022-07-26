@@ -82,6 +82,7 @@ func (list *List[T]) Find(expression func(element T) bool) List[T] {
 // AddOrReplace element in the list under some condition. Applies only to first element found under this condition
 //  - Try to find element that satisfied condition in isEqual function
 //  - If found replace with new provided element.
+//  - If not found add it to list.
 func (list *List[T]) AddOrReplace(element T, isEqual IsEqual[T]) {
 	result := AddOrReplace(*list, element, isEqual)
 	fmt.Printf("*** results: %v\n", result)

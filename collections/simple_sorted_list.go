@@ -10,20 +10,9 @@ type SimpleSortedList[T simpleTypes] []T
 
 // Add element to sorted list. It is duplicate tolerante.
 func (list *SimpleSortedList[T]) Add(element T) {
-
-	newList := *list
-	low := 0
-	high := len(newList) - 1
-	for low <= high {
-		median := (low + high) / 2
-		if newList[median] < element {
-			low = median + 1
-		} else {
-			high = median - 1
-		}
-	}
-	elems := append([]T{element}, newList[low:]...)
-	elems = append(newList[:low], elems...)
+	left := FindPosition(*list, element)
+	elems := append([]T{element}, (*list)[left:]...)
+	elems = append((*list)[:left], elems...)
 	*list = elems
 }
 
@@ -34,18 +23,18 @@ func (list *SimpleSortedList[T]) Remove(element T) bool {
 		return false
 	}
 	newList := *list
-	low := 0
-	high := len(newList) - 1
-	for low <= high {
-		median := (low + high) / 2
+	left := 0
+	right := len(newList) - 1
+	for left <= right {
+		median := (left + right) / 2
 		if newList[median] < element {
-			low = median + 1
+			left = median + 1
 		} else {
-			high = median - 1
+			right = median - 1
 		}
 	}
-	if low < len(newList) && newList[low] == element {
-		*list = append(newList[:low], newList[low+1:]...)
+	if left < len(newList) && newList[left] == element {
+		*list = append(newList[:left], newList[left+1:]...)
 		return true
 	}
 	return false

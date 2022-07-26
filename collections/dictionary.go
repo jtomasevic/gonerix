@@ -21,7 +21,7 @@ func (dic *Dictionary[K, V]) Length() int {
 
 func (dic *Dictionary[K, V]) Exist(key K) bool {
 	current := *dic
-	for k, _ := range current {
+	for k := range current {
 		if k == key {
 			return true
 		}

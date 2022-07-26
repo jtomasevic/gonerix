@@ -33,8 +33,8 @@ fmt.Println(list)
 // [1 2 4 8]
 ```
 ### Insert
-First parameter is index where to insert an emlement of more of them.
-Second parameter is one or values to be added to list
+First parameter is index where to insert an element of more of them.
+Second parameter is one or vmore alues to be added to list.
 #### Insert one value
 ```
 list.Insert(2, 3)
@@ -81,10 +81,10 @@ fmt.Printf("element: %v, index: %v\n", res, index)
 ```
 
 ### AddOrReplace
-This operation applies only to first element found under certain condition
+This operation applies only to first element found under certain condition.
 - Try to find element that satisfied condition in isEqual function (second parameter)
 - If found replace with new provided element (first parameter).
-- If not found add it to list.
+- If not found, add it to list.
 ```
 // Create some structs to be part of List
 type CupSize string
@@ -134,7 +134,7 @@ fmt.Println(products)
 // [{95 small} {150 medium} {200 large} {250 extraLarge}]
 ```
 ### Find
-Return list of elements that satisfy function check provided by expression parameter
+Return list of elements that satisfy function check, provided by expression parameter
 ```
 cheaperThan200 := products.Find(func(left BlackCoffeeOffer) bool {
 	return left.Price < 200

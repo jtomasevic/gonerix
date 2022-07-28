@@ -36,7 +36,7 @@ func (list *List[T]) Remove(element T) bool {
 
 // RemoveAt Removes the element at the specified index of the list
 func (list *List[T]) RemoveAt(position int) bool {
-	newList, removed := RemoveAt(*list, position)
+	newList, removed := RemoveAnyAt(*list, position)
 	if removed {
 		*list = newList
 		return true
@@ -58,7 +58,7 @@ func (list *List[T]) Reverse() {
 func (list *List[T]) Exist(element T) (bool, int) {
 	index := -1
 	for i, el := range *list {
-		if el == element {
+		if element == el {
 			index = i
 		}
 	}

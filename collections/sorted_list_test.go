@@ -1,75 +1,185 @@
 package collections
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestSortedList_AddRemove(t *testing.T) {
-	products := getProduct()
-	sorted := SortedList[string, Product]{}
-	for _, p := range products {
-		sorted.Add(p.Name, p)
-	}
-	require.Equal(t, sorted.keys.ToList(), List[string]{
-		"Addidas",
-		"Diadora",
-		"Nike",
-		"Nokka",
-		"Puma",
+	t.Run("Add", func(t *testing.T) {
+		products := getProduct()
+		sorted := SortedList[string, Product](ASC)
+		for _, p := range products {
+			sorted.Add(p.Name, p)
+		}
+		fmt.Printf("!!!!! %v\n", sorted.keys)
+
+		require.Equal(t, List[string]{
+			"Addidas",
+			"Diadora",
+			"Nike",
+			"Nokka",
+			"Puma",
+		}, sorted.keys.ToList())
+
+		require.Equal(t, List[Product]{
+			{
+				Name: "Addidas",
+			}, {
+				Name: "Diadora",
+			}, {
+				Name: "Nike",
+			}, {
+				Name: "Nokka",
+			}, {
+				Name: "Puma",
+			},
+		}, sorted.ToList())
 	})
+	t.Run("Remove", func(t *testing.T) {
+		products := getProduct()
+		sorted := SortedList[string, Product](ASC)
+		for _, p := range products {
+			sorted.Add(p.Name, p)
+		}
+		sorted.Remove("Nike")
+		require.Equal(t, List[string]{
+			"Addidas",
+			"Diadora",
+			"Nokka",
+			"Puma",
+		}, sorted.keys.ToList())
+		sorted.Remove("Puma")
+		sorted.Remove("Addidas")
+		require.Equal(t, sorted.keys.ToList(), List[string]{
+			"Diadora",
+			"Nokka",
+		})
 
-	products = getProduct()
-	sorted = SortedList[string, Product]{}
-	for _, p := range products {
-		sorted.Add(p.Name, p)
-	}
-	sorted.Remove("Nike")
-	require.Equal(t, sorted.keys.ToList(), List[string]{
-		"Addidas",
-		"Diadora",
-		"Nokka",
-		"Puma",
+		res := sorted.Remove("Addidas")
+		require.Equal(t, sorted.keys.ToList(), List[string]{
+			"Diadora",
+			"Nokka",
+		})
+		require.False(t, res)
+
+		sorted.Remove("Diadora")
+		sorted.Remove("Nokka")
+		require.Equal(t, sorted.keys.ToList(), List[string]{})
+		res = sorted.Remove("Nokka")
+		require.False(t, res)
+		require.Equal(t, sorted.keys.ToList(), List[string]{})
 	})
-	sorted.Remove("Puma")
-	sorted.Remove("Addidas")
-	require.Equal(t, sorted.keys.ToList(), List[string]{
-		"Diadora",
-		"Nokka",
+	t.Run("RemoveAt", func(t *testing.T) {
+		products := getProduct()
+		sorted := SortedList[string, Product](ASC)
+		for _, p := range products {
+			sorted.Add(p.Name, p)
+		}
+		sorted.RemoveAt(1)
+		require.Equal(t, List[string]{
+			"Addidas",
+			"Nike",
+			"Nokka",
+			"Puma",
+		}, sorted.keys.ToList())
+		result := sorted.RemoveAt(15)
+		require.False(t, result)
+		sorted = SortedList[string, Product](ASC)
+		result = sorted.RemoveAt(0)
+		require.False(t, result)
+		result = sorted.RemoveAt(+1)
+		require.False(t, result)
+
 	})
+}
 
-	res := sorted.Remove("Addidas")
-	require.Equal(t, sorted.keys.ToList(), List[string]{
-		"Diadora",
-		"Nokka",
+func TestSortedListDesc_AddRemove(t *testing.T) {
+	t.Run("Add", func(t *testing.T) {
+		products := getProduct()
+		sorted := SortedList[string, Product](DESC)
+		for _, p := range products {
+			sorted.Add(p.Name, p)
+		}
+		fmt.Printf("!!!!! %v\n", sorted.keys)
+
+		require.Equal(t, List[string]{
+			"Puma",
+			"Nokka",
+			"Nike",
+			"Diadora",
+			"Addidas",
+		}, sorted.keys.ToList())
 	})
-	require.False(t, res)
+	t.Run("Remove", func(t *testing.T) {
+		products := getProduct()
+		sorted := SortedList[string, Product](DESC)
+		for _, p := range products {
+			sorted.Add(p.Name, p)
+		}
+		sorted.Remove("Nike")
+		require.Equal(t, List[string]{
+			"Puma",
+			"Nokka",
+			"Diadora",
+			"Addidas",
+		}, sorted.keys.ToList())
+		sorted.Remove("Puma")
+		sorted.Remove("Addidas")
+		require.Equal(t, sorted.keys.ToList(), List[string]{
+			"Nokka",
+			"Diadora",
+		})
 
-	sorted.Remove("Diadora")
-	sorted.Remove("Nokka")
-	require.Equal(t, sorted.keys.ToList(), List[string]{})
-	res = sorted.Remove("Nokka")
-	require.False(t, res)
-	require.Equal(t, sorted.keys.ToList(), List[string]{})
+		res := sorted.Remove("Addidas")
+		require.Equal(t, sorted.keys.ToList(), List[string]{
+			"Nokka",
+			"Diadora",
+		})
+		require.False(t, res)
 
-	products = getProduct()
-	sorted = SortedList[string, Product]{}
-	for _, p := range products {
-		sorted.Add(p.Name, p)
-	}
-	require.Equal(t, sorted.Values(), []Product{
-		{
-			Name: "Addidas",
-		}, {
-			Name: "Diadora",
-		}, {
-			Name: "Nike",
-		}, {
-			Name: "Nokka",
-		}, {
-			Name: "Puma",
-		},
-	}, sorted)
+		sorted.Remove("Diadora")
+		sorted.Remove("Nokka")
+		require.Equal(t, sorted.keys.ToList(), List[string]{})
+		res = sorted.Remove("Nokka")
+		require.False(t, res)
+		require.Equal(t, sorted.keys.ToList(), List[string]{})
+	})
+	t.Run("RemoveAt", func(t *testing.T) {
+		products := getProduct()
+		sorted := SortedList[string, Product](DESC)
+		for _, p := range products {
+			sorted.Add(p.Name, p)
+		}
+		sorted.RemoveAt(1)
+		require.Equal(t, List[string]{
+			"Puma",
+			"Nike",
+			"Diadora",
+			"Addidas",
+		}, sorted.keys.ToList())
+		sorted.RemoveAt(0)
+		require.Equal(t, List[string]{
+			"Nike",
+			"Diadora",
+			"Addidas",
+		}, sorted.keys.ToList())
+		sorted.RemoveAt(2)
+		require.Equal(t, List[string]{
+			"Nike",
+			"Diadora",
+		}, sorted.keys.ToList())
 
+		result := sorted.RemoveAt(15)
+		require.False(t, result)
+
+		sorted = SortedList[string, Product](DESC)
+		result = sorted.RemoveAt(0)
+		require.False(t, result)
+		result = sorted.RemoveAt(+1)
+		require.False(t, result)
+
+	})
 }

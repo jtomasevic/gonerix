@@ -4,7 +4,7 @@ import "fmt"
 
 func PriorityQueue[T any, P simpleTypes]() priorityQueue[T, P] {
 	return priorityQueue[T, P]{
-		priorities: SimpleSortedList[P]{},
+		priorities: SimpleSortedList[P](ASC),
 		values:     Dictionary[P, Stack[T]]{},
 	}
 }
@@ -13,7 +13,7 @@ func PriorityQueue[T any, P simpleTypes]() priorityQueue[T, P] {
 //  - T Specifies the type of elements in the queue.
 //  - P Specifies the type of priority associated with enqueued elements.
 type priorityQueue[T any, P simpleTypes] struct {
-	priorities SimpleSortedList[P]
+	priorities simpleSortedList[P]
 	values     Dictionary[P, Stack[T]]
 }
 
@@ -35,7 +35,7 @@ func (queue *priorityQueue[T, P]) Enqueue(value T, priority P) {
 //  Note: If there is multiple elements with same priority last added will be removed first (Stack approach).
 //  If value with priority not exit return value will be false.
 func (queue *priorityQueue[T, P]) Dequeue() *T {
-	if len(queue.priorities) == 0 {
+	if queue.priorities.IsEmpty() {
 		return nil
 	}
 	priorities := queue.priorities
@@ -65,7 +65,7 @@ func (queue *priorityQueue[T, P]) Dequeue() *T {
 // Peek Returns the minimal element from the PriorityQueue without removing it.
 //  if queue is empty it returns nil.
 func (queue *priorityQueue[T, P]) Peek() *T {
-	if len(queue.priorities) == 0 {
+	if queue.priorities.IsEmpty() {
 		return nil
 	}
 	elementStack := queue.values[*queue.priorities.First()]

@@ -18,7 +18,7 @@ import (
 ```
 # API
 - [List[T]](https://github.com/jtomasevic/gonerix#listt)
-- [SimpleSortedList[T]](https://github.com/jtomasevic/gonerix/edit/main/README.md#simplesortedlist)
+- [SimpleSortedList[T]](https://github.com/jtomasevic/gonerix#simplesortedlist)
 
 # List[T]
 

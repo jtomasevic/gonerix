@@ -1,29 +1,30 @@
 package collections
 
-// IsLower returns true if left parameter is lower than right parameter
-type IsLower[T comparable] func(left T, right T) bool
+// CompareFunction
+// - If left parameter is lower than right parameter, this is ASC ordered list.
+// - If left parameter is higher than right parameter, this is DESC ordered list.
+type CompareFunction[T comparable] func(left T, right T) bool
 
 // SortedStructList create
-func SortedStructList[T comparable](comparableFunction IsLower[T]) sortedStructList[T] {
+func SortedStructList[T comparable](comparableFunction CompareFunction[T]) sortedStructList[T] {
 	return sortedStructList[T]{
-		isLower: comparableFunction,
+		compare: comparableFunction,
 	}
 }
 
 type sortedStructList[T comparable] struct {
 	elements []T
-	isLower  IsLower[T]
+	compare  CompareFunction[T]
 }
 
 // Add element to sorted list. It is duplicate tolerant.
 func (list *sortedStructList[T]) Add(element T) {
-
 	newList := list.elements
 	low := 0
 	high := len(newList) - 1
 	for low <= high {
 		median := (low + high) / 2
-		if list.isLower(newList[median], element) {
+		if list.compare(newList[median], element) {
 			low = median + 1
 		} else {
 			high = median - 1
@@ -45,7 +46,7 @@ func (list *sortedStructList[T]) Remove(element T) bool {
 	high := len(newList) - 1
 	for low <= high {
 		median := (low + high) / 2
-		if list.isLower(newList[median], element) {
+		if list.compare(newList[median], element) {
 			low = median + 1
 		} else {
 			high = median - 1

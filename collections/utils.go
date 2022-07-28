@@ -38,20 +38,6 @@ func AddOrReplace[T any](list []T,
 	return l
 }
 
-func AddOrReplaceWithAny[T any](list []T,
-	element T,
-	isEqual IsEqual[T]) []T {
-	for i, el := range list {
-		if isEqual(el, element) {
-			list[i] = element
-			return list
-		}
-	}
-	l := append(list, element)
-	fmt.Printf("**** generic result: %v\n", l)
-	return l
-}
-
 // FindPosition Return index of element in asc sorted list or:
 // - If element is not in elements, then return index where element can be added considering order.
 func FindPosition[T simpleTypes](elements []T, element T) int {

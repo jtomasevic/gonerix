@@ -12,7 +12,6 @@ For still not documented collections check out code and test/example, to underst
 We'll assume that in each file you'll have import of collection package with qx prefix, to make examples more readable:
 ```
 import (
-	"fmt"
 	gx "github.com/jtomasevic/gonerix/collections"
 )
 ```

@@ -20,6 +20,10 @@ import (
 - [SimpleSortedList[T]](https://github.com/jtomasevic/gonerix#simplesortedlist)
 - [SortedList[K, V]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedlistt)
 - [SortedsSructList[T]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedstructlistt)
+- Stack[T]
+- Queue[T]
+- PriorityQueue[T]
+- Dictionary[K,V]
 
 # List[T]
 

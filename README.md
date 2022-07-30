@@ -144,7 +144,7 @@ fmt.Println(cheaperThan200)
 // [{95 small} {150 medium}]
 ```
 # SimpleSortedList
-
+Represents a collection of simple values like int, float or string, anything where oprerator '<' is applicable.
 ### Add
 ```
 list := gx.SimpleSortedList[int](gx.ASC)
@@ -203,7 +203,46 @@ count := list.Count()
 fmt.Println(count)
 // 3
 ```
+# SortedList[T]
+Represents a collection of key/value pairs that are sorted by the keys and are accessible by key and by index.
+### Add
+```
+list := gx.SortedList[int, Order](gx.ASC)
+
+list.Add(3, Order{
+	Customer: "C",
+	OrderNo:  52,
+})
+list.Add(1, Order{
+	Customer: "A",
+	OrderNo:  50,
+})
+list.Add(4, Order{
+	Customer: "D",
+	OrderNo:  53,
+})
+list.Add(2, Order{
+	Customer: "B",
+	OrderNo:  51,
+})
+
+fmt.Println(list.ToList())
+// [{A 50} {B 51} {C 52} {D 5}]
+```
+### Remove
+```
+...
+```
+### RemoveAt
+```
+...
+```
+
 # SortedStructList[T]
+Mandatory parameter for creating sorted struct list is comapare function. 
+
+ - If left parameter is lower than right parameter, this is ASC ordered list.
+ - If left parameter is higher than right parameter, this is DESC ordered list.
 ### Add
 ```
 type Brand struct {

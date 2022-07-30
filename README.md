@@ -18,6 +18,7 @@ import (
 # API
 - [List[T]](https://github.com/jtomasevic/gonerix#listt)
 - [SimpleSortedList[T]](https://github.com/jtomasevic/gonerix#simplesortedlist)
+- [SortedList[K, V](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedlistt)
 - [SortedsSructList[T]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedstructlistt)
 
 # List[T]

@@ -20,10 +20,10 @@ import (
 - [SimpleSortedList[T]](https://github.com/jtomasevic/gonerix#simplesortedlist)
 - [SortedList[K, V]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedlistt)
 - [SortedsSructList[T]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedstructlistt)
-- Stack[T]
-- Queue[T]
-- PriorityQueue[T]
-- Dictionary[K,V]
+- Stack[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/stack_test.go)
+- Queue[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/queue_test.go)
+- PriorityQueue[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/priority_queue_test.go)
+- Dictionary[K,V] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/dictionary_test.go)
 
 # List[T]
 

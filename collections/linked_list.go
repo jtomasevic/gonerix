@@ -46,12 +46,8 @@ func (list *linkedList[T]) Remove(value T) (*Node[T], bool) {
 	temp := list.head
 	for temp != nil {
 		if temp.Value == value {
-			ok := list.RemoveNode(temp)
-			if ok {
-				return temp, true
-			} else {
-				return nil, false
-			}
+			list.RemoveNode(temp)
+			return temp, true
 		} else {
 			temp = temp.Next
 		}

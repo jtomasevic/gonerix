@@ -13,7 +13,7 @@ func SortedStructList[T comparable](comparableFunction CompareFunction[T]) sorte
 }
 
 type sortedStructList[T comparable] struct {
-	elements []T
+	elements List[T]
 	compare  CompareFunction[T]
 }
 
@@ -30,9 +30,7 @@ func (list *sortedStructList[T]) Add(element T) {
 			high = median - 1
 		}
 	}
-	elems := append([]T{element}, newList[low:]...)
-	elems = append(newList[:low], elems...)
-	list.elements = elems
+	list.elements.Insert(low, element)
 }
 
 // Remove element from sorted list. If there is multiple values, removes only first one.
@@ -53,8 +51,9 @@ func (list *sortedStructList[T]) Remove(element T) bool {
 		}
 	}
 	if low < len(newList) && newList[low] == element {
-		newList = append(newList[:low], newList[low+1:]...)
-		list.elements = newList
+		list.elements.RemoveAt(low)
+		//newList = append(newList[:low], newList[low+1:]...)
+		//list.elements = newList
 		return true
 	}
 	return false

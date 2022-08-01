@@ -10,7 +10,7 @@ func TestSortedStructList_Add(t *testing.T) {
 	sorted := getSortedProductsAsc()
 
 	t.Run("Add ", func(t *testing.T) {
-		require.Equal(t, sorted.Values(), []Product{
+		require.Equal(t, []Product{
 			{
 				Name: "Addidas",
 			},
@@ -26,7 +26,7 @@ func TestSortedStructList_Add(t *testing.T) {
 			{
 				Name: "Puma",
 			},
-		})
+		}, sorted.Values())
 	})
 }
 
@@ -38,7 +38,7 @@ func TestSortedStructList_Remove(t *testing.T) {
 			Name: "Nike",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Addidas",
 			},
@@ -51,14 +51,14 @@ func TestSortedStructList_Remove(t *testing.T) {
 			{
 				Name: "Puma",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove non existing element", func(t *testing.T) {
 		result := sorted.Remove(Product{
 			Name: "Nike",
 		})
 		require.False(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Addidas",
 			},
@@ -71,14 +71,14 @@ func TestSortedStructList_Remove(t *testing.T) {
 			{
 				Name: "Puma",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove First", func(t *testing.T) {
 		result := sorted.Remove(Product{
 			Name: "Addidas",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Diadora",
 			},
@@ -88,21 +88,21 @@ func TestSortedStructList_Remove(t *testing.T) {
 			{
 				Name: "Puma",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove Last", func(t *testing.T) {
 		result := sorted.Remove(Product{
 			Name: "Puma",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Diadora",
 			},
 			{
 				Name: "Nokka",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove From empty", func(t *testing.T) {
 		result := sorted.Remove(Product{
@@ -113,7 +113,7 @@ func TestSortedStructList_Remove(t *testing.T) {
 			Name: "Nokka",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{})
+		require.Equal(t, List[Product]{}, sorted.elements)
 		result = sorted.Remove(Product{
 			Name: "Some random product",
 		})
@@ -127,7 +127,7 @@ func TestSortedStructList_RemoveAt(t *testing.T) {
 	t.Run("Remove from middle ", func(t *testing.T) {
 		result := sorted.RemoveAt(2)
 		require.True(t, result)
-		require.Equal(t, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Addidas",
 			},
@@ -146,7 +146,7 @@ func TestSortedStructList_RemoveAt(t *testing.T) {
 	t.Run("Remove with non existing index", func(t *testing.T) {
 		result := sorted.RemoveAt(10)
 		require.False(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Addidas",
 			},
@@ -159,14 +159,14 @@ func TestSortedStructList_RemoveAt(t *testing.T) {
 			{
 				Name: "Puma",
 			},
-		})
+		}, sorted.elements)
 		result = sorted.RemoveAt(-1)
 		require.False(t, result)
 	})
 	t.Run("Remove at First", func(t *testing.T) {
 		result := sorted.RemoveAt(0)
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Diadora",
 			},
@@ -176,26 +176,26 @@ func TestSortedStructList_RemoveAt(t *testing.T) {
 			{
 				Name: "Puma",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove at Last", func(t *testing.T) {
 		result := sorted.RemoveAt(2)
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Diadora",
 			},
 			{
 				Name: "Nokka",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove at From empty", func(t *testing.T) {
 		result := sorted.RemoveAt(0)
 		require.True(t, result)
 		result = sorted.RemoveAt(0)
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{})
+		require.Equal(t, List[Product]{}, sorted.elements)
 		require.Equal(t, sorted.Size(), 0)
 
 		result = sorted.RemoveAt(0)
@@ -209,7 +209,7 @@ func TestSortedStructListDesc_Add(t *testing.T) {
 	sorted := getSortedProductsDesc()
 
 	t.Run("Add ", func(t *testing.T) {
-		require.Equal(t, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Puma",
 			},
@@ -225,7 +225,7 @@ func TestSortedStructListDesc_Add(t *testing.T) {
 			{
 				Name: "Addidas",
 			},
-		}, sorted.Values())
+		}, sorted.elements)
 	})
 }
 
@@ -237,7 +237,7 @@ func TestSortedStructListDesc_Remove(t *testing.T) {
 			Name: "Nike",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Puma",
 			},
@@ -250,14 +250,14 @@ func TestSortedStructListDesc_Remove(t *testing.T) {
 			{
 				Name: "Addidas",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove non existing element", func(t *testing.T) {
 		result := sorted.Remove(Product{
 			Name: "Nike",
 		})
 		require.False(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Puma",
 			},
@@ -270,14 +270,14 @@ func TestSortedStructListDesc_Remove(t *testing.T) {
 			{
 				Name: "Addidas",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove First", func(t *testing.T) {
 		result := sorted.Remove(Product{
 			Name: "Puma",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Nokka",
 			},
@@ -287,21 +287,21 @@ func TestSortedStructListDesc_Remove(t *testing.T) {
 			{
 				Name: "Addidas",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove Last", func(t *testing.T) {
 		result := sorted.Remove(Product{
 			Name: "Addidas",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Nokka",
 			},
 			{
 				Name: "Diadora",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove From empty", func(t *testing.T) {
 		result := sorted.Remove(Product{
@@ -312,7 +312,7 @@ func TestSortedStructListDesc_Remove(t *testing.T) {
 			Name: "Nokka",
 		})
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{})
+		require.Equal(t, List[Product]{}, sorted.elements)
 		result = sorted.Remove(Product{
 			Name: "Some random product",
 		})
@@ -326,7 +326,7 @@ func TestSortedStructListDesc_RemoveAt(t *testing.T) {
 	t.Run("Remove from middle ", func(t *testing.T) {
 		result := sorted.RemoveAt(2)
 		require.True(t, result)
-		require.Equal(t, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Puma",
 			},
@@ -345,7 +345,7 @@ func TestSortedStructListDesc_RemoveAt(t *testing.T) {
 	t.Run("Remove with non existing index", func(t *testing.T) {
 		result := sorted.RemoveAt(10)
 		require.False(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Puma",
 			},
@@ -358,14 +358,14 @@ func TestSortedStructListDesc_RemoveAt(t *testing.T) {
 			{
 				Name: "Addidas",
 			},
-		})
+		}, sorted.elements)
 		result = sorted.RemoveAt(-1)
 		require.False(t, result)
 	})
 	t.Run("Remove at First", func(t *testing.T) {
 		result := sorted.RemoveAt(0)
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Nokka",
 			},
@@ -375,26 +375,26 @@ func TestSortedStructListDesc_RemoveAt(t *testing.T) {
 			{
 				Name: "Addidas",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove at Last", func(t *testing.T) {
 		result := sorted.RemoveAt(2)
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{
+		require.Equal(t, List[Product]{
 			{
 				Name: "Nokka",
 			},
 			{
 				Name: "Diadora",
 			},
-		})
+		}, sorted.elements)
 	})
 	t.Run("Remove at From empty", func(t *testing.T) {
 		result := sorted.RemoveAt(0)
 		require.True(t, result)
 		result = sorted.RemoveAt(0)
 		require.True(t, result)
-		require.Equal(t, sorted.elements, []Product{})
+		require.Equal(t, List[Product]{}, sorted.elements)
 		require.Equal(t, sorted.Size(), 0)
 
 		result = sorted.RemoveAt(0)
@@ -430,8 +430,8 @@ type Product struct {
 	Name string
 }
 
-func getProduct() []Product {
-	return []Product{
+func getProduct() List[Product] {
+	return List[Product]{
 		{
 			Name: "Diadora",
 		},

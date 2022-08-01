@@ -20,6 +20,7 @@ import (
 - [SimpleSortedList[T]](https://github.com/jtomasevic/gonerix#simplesortedlist)
 - [SortedList[K, V]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedlistt)
 - [SortedsSructList[T]](https://github.com/jtomasevic/gonerix/blob/main/README.md#sortedstructlistt)
+- LinkedList[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/linked_list_test.go)
 - Stack[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/stack_test.go)
 - Queue[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/queue_test.go)
 - PriorityQueue[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/priority_queue_test.go)

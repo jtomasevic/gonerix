@@ -157,6 +157,9 @@ func TestList_AddOrReplace(t *testing.T) {
 	isEqual := func(left TransferCost, right TransferCost) bool {
 		return left.CityName == right.CityName
 	}
+	isEqualPtr := func(left *TransferCost, right *TransferCost) bool {
+		return left.CityName == right.CityName
+	}
 	t.Run("AddOrReplace Add", func(t *testing.T) {
 		costs := getTransferCostList()
 		new := TransferCost{
@@ -180,6 +183,30 @@ func TestList_AddOrReplace(t *testing.T) {
 			new,
 		}, costs)
 	})
+	t.Run("AddOrReplace (Ptr) Add", func(t *testing.T) {
+		costs := getTransferCostListPtr()
+		new := &TransferCost{
+			CityName: "Bahrein",
+			Price:    350,
+		}
+		costs.AddOrReplace(new, isEqualPtr)
+		require.Equal(t, List[*TransferCost]{
+			{
+				CityName: "Belgrade",
+				Price:    120,
+			},
+			{
+				CityName: "London",
+				Price:    400,
+			},
+			{
+				CityName: "New York",
+				Price:    800,
+			},
+			new,
+		}, costs)
+	})
+
 	t.Run("AddOrReplace Replace First", func(t *testing.T) {
 		costs := getTransferCostList()
 		replace := TransferCost{
@@ -272,6 +299,23 @@ type TransferCost struct {
 
 func getTransferCostList() List[TransferCost] {
 	return List[TransferCost]{
+		{
+			CityName: "Belgrade",
+			Price:    120,
+		},
+		{
+			CityName: "London",
+			Price:    400,
+		},
+		{
+			CityName: "New York",
+			Price:    800,
+		},
+	}
+}
+
+func getTransferCostListPtr() List[*TransferCost] {
+	return List[*TransferCost]{
 		{
 			CityName: "Belgrade",
 			Price:    120,

@@ -233,7 +233,7 @@ list.Add(2, Order{
 })
 
 fmt.Println(list.ToList())
-// [{A 50} {B 51} {C 52} {D 5}]
+// [{A 50} {B 51} {C 52} {D 53}]
 ```
 ### Remove
 ```

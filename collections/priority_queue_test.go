@@ -17,7 +17,7 @@ func getListOfPriorityQueueValues[T comparable, P simpleTypes](queue priorityQue
 
 func TestPriorityQueue_Enqueue(t *testing.T) {
 	t.Run("Random 1 - ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("4", 4)
@@ -33,7 +33,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 		}, actual)
 	})
 	t.Run("Random 1 - DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("4", 4)
@@ -50,7 +50,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 	})
 
 	t.Run("Random 2 - ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("4", 4)
 		queue.Enqueue("3", 3)
 		queue.Enqueue("2", 2)
@@ -61,7 +61,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 		}, actual)
 	})
 	t.Run("Random 2 - DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("4", 4)
 		queue.Enqueue("3", 3)
 		queue.Enqueue("2", 2)
@@ -73,7 +73,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 	})
 
 	t.Run("Random 3 - ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("3", 3)
@@ -84,7 +84,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 		}, actual)
 	})
 	t.Run("Random 3 - DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("3", 3)
@@ -96,7 +96,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 	})
 
 	t.Run("Random 4 - ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("5", 5)
 		queue.Enqueue("7", 7)
 		queue.Enqueue("2", 2)
@@ -112,7 +112,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 		}, actual)
 	})
 	t.Run("Random 4 - DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("5", 5)
 		queue.Enqueue("7", 7)
 		queue.Enqueue("2", 2)
@@ -129,7 +129,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 	})
 
 	t.Run("Random 5 - ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("3", 3)
@@ -145,7 +145,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 		}, actual)
 	})
 	t.Run("Random 5 - DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("3", 3)
@@ -162,7 +162,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 	})
 
 	t.Run("Random with repeated values - ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("5", 5)
 		queue.Enqueue("7", 7)
 		queue.Enqueue("2", 2)
@@ -196,7 +196,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 	})
 
 	t.Run("Random with repeated values - DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("5", 5)
 		queue.Enqueue("7", 7)
 		queue.Enqueue("2", 2)
@@ -233,7 +233,7 @@ func TestPriorityQueue_Enqueue(t *testing.T) {
 
 func TestPriorityQueue_Dequeue(t *testing.T) {
 	t.Run("ASC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](ASC, 5)
+		queue := PriorityQueue[string, int](ASC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("3", 3)
@@ -279,7 +279,7 @@ func TestPriorityQueue_Dequeue(t *testing.T) {
 		require.Nil(t, peek)
 	})
 	t.Run("DESC", func(t *testing.T) {
-		queue := PriorityQueue[string, int](DESC, 5)
+		queue := PriorityQueue[string, int](DESC, 50)
 		queue.Enqueue("1", 1)
 		queue.Enqueue("2", 2)
 		queue.Enqueue("3", 3)
@@ -294,11 +294,121 @@ func TestPriorityQueue_Dequeue(t *testing.T) {
 	})
 }
 
+func TestPriorityQueue_Capacity(t *testing.T) {
+	t.Run("Random 1 - ASC", func(t *testing.T) {
+		queue := PriorityQueue[string, int](ASC, 5)
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Enqueue("4", 4)
+		queue.Enqueue("5", 5)
+		queue.Enqueue("3", 3)
+		queue.Enqueue("8", 8)
+		queue.Enqueue("6", 6)
+		queue.Enqueue("7", 7)
+
+		actual := getListOfPriorityQueueValues(queue)
+		require.Equal(t, []string{
+			"1", "2", "3", "4", "5",
+		}, actual)
+	})
+	t.Run("Random 1 - DESC", func(t *testing.T) {
+		queue := PriorityQueue[string, int](DESC, 5)
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Enqueue("4", 4)
+		queue.Enqueue("5", 5)
+		queue.Enqueue("3", 3)
+		queue.Enqueue("8", 8)
+		queue.Enqueue("6", 6)
+		queue.Enqueue("7", 7)
+
+		actual := getListOfPriorityQueueValues(queue)
+		require.Equal(t, []string{
+			"5", "4", "3", "2", "1",
+		}, actual)
+	})
+
+	t.Run("Random 1 - ASC", func(t *testing.T) {
+		queue := PriorityQueue[string, int](ASC, 5)
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Dequeue()
+		queue.Enqueue("3", 3)
+		queue.Enqueue("4", 4)
+		queue.Enqueue("5", 5)
+		queue.Dequeue()
+		queue.Enqueue("8", 8)
+		queue.Enqueue("6", 6)
+		queue.Enqueue("7", 7)
+
+		actual := getListOfPriorityQueueValues(queue)
+		require.Equal(t, []string{
+			"3", "4", "5", "6", "8",
+		}, actual)
+	})
+	t.Run("Random 1 - DESC", func(t *testing.T) {
+		queue := PriorityQueue[string, int](DESC, 5)
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Dequeue()
+		queue.Enqueue("3", 3)
+		queue.Enqueue("4", 4)
+		queue.Enqueue("5", 5)
+		queue.Dequeue()
+		queue.Enqueue("8", 8)
+		queue.Enqueue("6", 6)
+		queue.Enqueue("7", 7)
+
+		actual := getListOfPriorityQueueValues(queue)
+		require.Equal(t, []string{
+			"8", "6", "4", "3", "1",
+		}, actual)
+	})
+	t.Run("Random 2 - ASC", func(t *testing.T) {
+		queue := PriorityQueue[string, int](ASC, 3)
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Dequeue()
+		queue.Dequeue()
+		queue.Dequeue()
+		queue.Dequeue()
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Enqueue("3", 3)
+		queue.Enqueue("4", 4)
+		queue.Enqueue("5", 5)
+
+		actual := getListOfPriorityQueueValues(queue)
+		require.Equal(t, []string{
+			"1", "2", "3",
+		}, actual)
+	})
+	t.Run("Random 2 - DESC", func(t *testing.T) {
+		queue := PriorityQueue[string, int](DESC, 3)
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Dequeue()
+		queue.Dequeue()
+		queue.Dequeue()
+		queue.Dequeue()
+		queue.Enqueue("1", 1)
+		queue.Enqueue("2", 2)
+		queue.Enqueue("3", 3)
+		queue.Enqueue("4", 4)
+		queue.Enqueue("5", 5)
+
+		actual := getListOfPriorityQueueValues(queue)
+		require.Equal(t, []string{
+			"3", "2", "1",
+		}, actual)
+	})
+}
+
 //func TestPriorityQueue_Enqueue(t *testing.T) {
 //	t.Run("Add", func(t *testing.T) {
 //		orders := getOrders()
 //		// it means lower number means higher priority. So priority with value 1 is higher than priority with value 2.
-//		queue := PriorityQueue[Order, int](ASC, 5)
+//		queue := PriorityQueue[Order, int](ASC, 50)
 //		for _, order := range orders {
 //			queue.Enqueue(order, order.Priority)
 //		}

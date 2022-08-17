@@ -1,5 +1,7 @@
 package collections
 
+import "math"
+
 type priorityNode[T comparable, P simpleTypes] struct {
 	Priority P
 	Value    T
@@ -9,7 +11,8 @@ type priorityNode[T comparable, P simpleTypes] struct {
 //  - Every item has a priority associated with it.
 //  - An element with high priority is dequeued before an element with low priority.
 //  - If two elements have the same priority, they are served according to their order in the queue.
-//  - Capacity: queue has capacity, so some elements could be lost if capacity is full.
+//  - Capacity: queue has capacity, so some elements could be lost if capacity is full. if it's set to -1 then it's infinite
+//
 func PriorityQueue[T comparable, P simpleTypes](priorityOrderType SortDirection, capacity int) priorityQueue[T, P] {
 	var ascCondition = func(priority P, node *Node[priorityNode[T, P]]) bool {
 		return priority >= node.Value.Priority
@@ -18,6 +21,9 @@ func PriorityQueue[T comparable, P simpleTypes](priorityOrderType SortDirection,
 		return priority <= node.Value.Priority
 	}
 	var condition func(priority P, node *Node[priorityNode[T, P]]) bool
+	if capacity == -1 {
+		capacity = math.MaxInt
+	}
 	if priorityOrderType == ASC {
 		condition = ascCondition
 	} else {
@@ -27,6 +33,7 @@ func PriorityQueue[T comparable, P simpleTypes](priorityOrderType SortDirection,
 		capacity:        capacity,
 		elements:        LinkedList[priorityNode[T, P]](),
 		compareFunction: condition,
+		count:           0,
 	}
 }
 
@@ -37,11 +44,16 @@ type priorityQueue[T comparable, P simpleTypes] struct {
 	capacity        int
 	elements        linkedList[priorityNode[T, P]]
 	compareFunction func(priority P, node *Node[priorityNode[T, P]]) bool
+	count           int
 }
 
 // Enqueue Adds the specified element with associated priority.
 //  - O(n) = n
 func (queue *priorityQueue[T, P]) Enqueue(value T, priority P) {
+	if queue.count == queue.capacity {
+		return
+	}
+	queue.count = queue.count + 1
 	current := queue.elements.HeadNode()
 	// if list is empty
 	if current == nil {
@@ -72,6 +84,10 @@ func (queue *priorityQueue[T, P]) Enqueue(value T, priority P) {
 			Value:    value,
 		})
 	}
+	//if queue.capacity != -1 && queue.capacity > queue.count {
+	//	toRemove := queue.elements.tail
+	//	queue.elements.RemoveNode(toRemove)
+	//}
 }
 
 // Dequeue Removes and returns the minimal element from the PriorityQueue - that is, the element with the lowest priority value.
@@ -82,6 +98,7 @@ func (queue *priorityQueue[T, P]) Dequeue() *T {
 	if queue.elements.head == nil {
 		return nil
 	}
+	queue.count = queue.count - 1
 	forDequeue := queue.elements.head
 	if queue.elements.head.Next != nil {
 		queue.elements.head.Next.Prev = nil

@@ -36,6 +36,64 @@ func (list *linkedList[T]) Add(value T) *Node[T] {
 	return newNode
 }
 
+// AddAfter Create new node and add it after provided node in list.
+//   NOTE: If you send nil, this means that list you want to add it as first element.
+//  - Return added node reference
+func (list *linkedList[T]) AddAfter(node *Node[T], value T) *Node[T] {
+	newNode := &Node[T]{
+		Value: value,
+	}
+	if node == nil {
+		// list has no elements
+		if list.head == nil {
+			list.head = newNode
+			list.tail = newNode
+		} else { // add as head node
+			newNode.Next = list.head
+			list.head.Prev = newNode
+			list.head = newNode
+		}
+	} else { // add in the middle.
+		newNode.Prev = node
+		newNode.Next = node.Next
+		node.Next = newNode
+		// check if node was tail
+		if node == list.tail {
+			list.tail = newNode
+		}
+	}
+	return newNode
+}
+
+func (list *linkedList[T]) AddBefore(node *Node[T], value T) *Node[T] {
+	newNode := &Node[T]{
+		Value: value,
+	}
+	if node == nil {
+		// list has no elements
+		if list.head == nil {
+			list.head = newNode
+			list.tail = newNode
+		} else { // add as head node
+			newNode.Next = list.head
+			list.head.Prev = newNode
+			list.head = newNode
+		}
+	} else { // add in the middle.
+		newNode.Next = node
+		newNode.Prev = node.Prev
+		if node.Prev != nil {
+			node.Prev.Next = newNode
+		}
+		node.Prev = newNode
+		// check if node was head
+		if node == list.head {
+			list.head = newNode
+		}
+	}
+	return newNode
+}
+
 // Remove node from list where element has provided Value.
 //  - runtime: this method performs a linear search; therefore, this method is an O(n) operation
 //  - return pointer to the removed node
@@ -84,13 +142,13 @@ func (list *linkedList[T]) RemoveNode(node *Node[T]) bool {
 }
 
 func (list *linkedList[T]) Values() []T {
-	printList := List[T]{}
+	values := List[T]{}
 	temp := list.head
 	for temp != nil {
-		printList.Add(temp.Value)
+		values.Add(temp.Value)
 		temp = temp.Next
 	}
-	return printList
+	return values
 }
 func (list *linkedList[T]) Head() *T {
 	if list.head != nil {

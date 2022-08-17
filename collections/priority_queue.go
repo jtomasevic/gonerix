@@ -1,73 +1,104 @@
 package collections
 
-import "fmt"
+type priorityNode[T comparable, P simpleTypes] struct {
+	Priority P
+	Value    T
+}
 
-func PriorityQueue[T any, P simpleTypes]() priorityQueue[T, P] {
+// PriorityQueue  is an extension of the queue with the following properties:
+//  - Every item has a priority associated with it.
+//  - An element with high priority is dequeued before an element with low priority.
+//  - If two elements have the same priority, they are served according to their order in the queue.
+//  - Capacity: queue has capacity, so some elements could be lost if capacity is full.
+func PriorityQueue[T comparable, P simpleTypes](priorityOrderType SortDirection, capacity int) priorityQueue[T, P] {
+	var ascCondition = func(priority P, node *Node[priorityNode[T, P]]) bool {
+		return priority >= node.Value.Priority
+	}
+	var descCondition = func(priority P, node *Node[priorityNode[T, P]]) bool {
+		return priority <= node.Value.Priority
+	}
+	var condition func(priority P, node *Node[priorityNode[T, P]]) bool
+	if priorityOrderType == ASC {
+		condition = ascCondition
+	} else {
+		condition = descCondition
+	}
 	return priorityQueue[T, P]{
-		priorities: SimpleSortedList[P](ASC),
-		values:     Dictionary[P, Stack[T]]{},
+		capacity:        capacity,
+		elements:        LinkedList[priorityNode[T, P]](),
+		compareFunction: condition,
 	}
 }
 
-// priorityQueue Represents a collection of items that have a value and a priority. On dequeue, the item with the lowest priority value is removed.
+// priorityQueue Represents a collection of items that have a value and a priority.
 //  - T Specifies the type of elements in the queue.
 //  - P Specifies the type of priority associated with enqueued elements.
-type priorityQueue[T any, P simpleTypes] struct {
-	priorities simpleSortedList[P]
-	values     Dictionary[P, Stack[T]]
+type priorityQueue[T comparable, P simpleTypes] struct {
+	capacity        int
+	elements        linkedList[priorityNode[T, P]]
+	compareFunction func(priority P, node *Node[priorityNode[T, P]]) bool
 }
 
-// Enqueue Adds the specified element with associated priority
+// Enqueue Adds the specified element with associated priority.
+//  - O(n) = n
 func (queue *priorityQueue[T, P]) Enqueue(value T, priority P) {
-	values := queue.values
-	queue.priorities.Add(priority)
-	// check if this is first item with provided priority
-	if !values.Exist(priority) {
-		values[priority] = Stack[T]{}
+	current := queue.elements.HeadNode()
+	// if list is empty
+	if current == nil {
+		queue.elements.Add(priorityNode[T, P]{
+			Priority: priority,
+			Value:    value,
+		})
+		return
 	}
-	priorityStack := values[priority]
-	priorityStack.Push(value)
-	values[priority] = priorityStack
-	queue.values = values
+	// keep track on prev because if current is nil at the end, then we should refer to prev.
+	prev := current
+	// for current != nil && priority >= current.Value.Priority {
+	for current != nil && queue.compareFunction(priority, current) {
+		prev = current
+		current = current.Next
+	}
+	if current == nil {
+		current = prev
+	}
+	if queue.compareFunction(priority, current) {
+		queue.elements.AddAfter(current, priorityNode[T, P]{
+			Priority: priority,
+			Value:    value,
+		})
+	} else {
+		queue.elements.AddBefore(current, priorityNode[T, P]{
+			Priority: priority,
+			Value:    value,
+		})
+	}
 }
 
 // Dequeue Removes and returns the minimal element from the PriorityQueue - that is, the element with the lowest priority value.
 //  Note: If there is multiple elements with same priority last added will be removed first (Stack approach).
 //  If value with priority not exit return value will be false.
+//  - O(n) = 1
 func (queue *priorityQueue[T, P]) Dequeue() *T {
-	if queue.priorities.IsEmpty() {
+	if queue.elements.head == nil {
 		return nil
 	}
-	priorities := queue.priorities
-	values := queue.values
-	minPriority := queue.priorities.First()
-	priorityElements := values[*minPriority]
-	// TODO JT: fix this code, looks ugly
-	forRemoving := priorityElements.Pop()
-	values[*minPriority] = priorityElements
-	// this should never happen, but for every case.
-	if forRemoving == nil {
-		return nil
+	forDequeue := queue.elements.head
+	if queue.elements.head.Next != nil {
+		queue.elements.head.Next.Prev = nil
+		queue.elements.head = queue.elements.head.Next
+	} else {
+		queue.elements.head = nil
+		queue.elements.tail = nil
 	}
-
-	fmt.Printf("*** to rempve %v , element: %v \n", *minPriority, forRemoving)
-	priorities.Remove(*minPriority)
-	// if this was last element
-	if priorityElements.IsEmpty() {
-		values.Remove(*minPriority)
-	}
-	queue.priorities = priorities
-	queue.values = values
-	fmt.Printf("**** prios: %v\n", queue.priorities)
-	return forRemoving
+	return &forDequeue.Value.Value
 }
 
 // Peek Returns the minimal element from the PriorityQueue without removing it.
 //  if queue is empty it returns nil.
+//  - O(n) = 1
 func (queue *priorityQueue[T, P]) Peek() *T {
-	if queue.priorities.IsEmpty() {
+	if queue.elements.head == nil {
 		return nil
 	}
-	elementStack := queue.values[*queue.priorities.First()]
-	return elementStack.Peek()
+	return &queue.elements.head.Value.Value
 }

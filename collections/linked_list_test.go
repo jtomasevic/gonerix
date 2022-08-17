@@ -422,5 +422,75 @@ func TestLinkedList_HeadNode_TailNode(t *testing.T) {
 	tailPtr := list.TailNode()
 	require.Nil(t, headPtr)
 	require.Nil(t, tailPtr)
+}
 
+func TestLinkedList_AddAfter(t *testing.T) {
+	t.Run("Add after (in empty list)", func(t *testing.T) {
+		list := LinkedList[int]()
+		node := list.AddAfter(nil, 10)
+		require.Equal(t, []int{10}, list.Values())
+		require.Equal(t, node, list.HeadNode())
+		require.Equal(t, node, list.TailNode())
+	})
+	t.Run("Add after first node (head)", func(t *testing.T) {
+		list := LinkedList[int]()
+		list.Add(2)
+		list.Add(3)
+		node := list.AddAfter(nil, 1)
+		require.Equal(t, []int{1, 2, 3}, list.Values())
+		require.Equal(t, node, list.HeadNode())
+	})
+	t.Run("Add after node in the middle", func(t *testing.T) {
+		list := LinkedList[int]()
+		list.Add(1)
+		middleNode := list.Add(2)
+		list.Add(4)
+
+		list.AddAfter(middleNode, 3)
+		require.Equal(t, []int{1, 2, 3, 4}, list.Values())
+	})
+	t.Run("Add after last node (tail)", func(t *testing.T) {
+		list := LinkedList[int]()
+		list.Add(1)
+		list.Add(2)
+		tail := list.Add(3)
+		newTail := list.AddAfter(tail, 4)
+		require.Equal(t, []int{1, 2, 3, 4}, list.Values())
+		require.Equal(t, newTail, list.tail)
+	})
+}
+
+func TestLinkedList_AddBefore(t *testing.T) {
+	t.Run("Add before (in empty list)", func(t *testing.T) {
+		list := LinkedList[int]()
+		node := list.AddBefore(nil, 10)
+		require.Equal(t, []int{10}, list.Values())
+		require.Equal(t, node, list.HeadNode())
+		require.Equal(t, node, list.TailNode())
+	})
+	t.Run("Add before first node (head)", func(t *testing.T) {
+		list := LinkedList[int]()
+		list.Add(2)
+		list.Add(3)
+		node := list.AddBefore(nil, 1)
+		require.Equal(t, []int{1, 2, 3}, list.Values())
+		require.Equal(t, node, list.HeadNode())
+	})
+	t.Run("Add before node in the middle", func(t *testing.T) {
+		list := LinkedList[int]()
+		list.Add(1)
+		middleNode := list.Add(3)
+		list.Add(4)
+
+		list.AddBefore(middleNode, 2)
+		require.Equal(t, []int{1, 2, 3, 4}, list.Values())
+	})
+	t.Run("Add before last node (tail)", func(t *testing.T) {
+		list := LinkedList[int]()
+		list.Add(1)
+		list.Add(2)
+		tail := list.Add(4)
+		list.AddBefore(tail, 3)
+		require.Equal(t, []int{1, 2, 3, 4}, list.Values())
+	})
 }

@@ -25,7 +25,7 @@ import (
 - Queue[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/queue_test.go)
 - PriorityQueue[T] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/priority_queue_test.go)
 - Dictionary[K,V] [check unit tests until documentation is done](https://github.com/jtomasevic/gonerix/blob/main/collections/dictionary_test.go)
-
+- LRUCache[K, V] [check unit tests until documentation is done] (https://github.com/jtomasevic/gonerix/blob/main/collections/lru_cache.go)
 # List[T]
 
 ### Add

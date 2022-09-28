@@ -5,8 +5,6 @@ Generic collections for golang
 
 For still not documented collections check out code and test/example, to understand more. 
 
-### Expected release + more explainational examples: 
-1st September 2022.
 ## Usage
 
 We'll assume that in each file you'll have import of collection package with qx prefix, to make examples more readable:
